@@ -1,0 +1,18 @@
+{
+  "aliases": {
+    "App": "app",
+    "Config": "config",
+    "Contracts": "contracts",
+    "Database": "database"
+  },
+  "commands": [
+    "./commands",
+    "@adonisjs/core/build/commands",
+    "@adonisjs/lucid/build/commands"
+  ],
+  "exceptionHandlerNamespace": "App/Exceptions/Handler",
+  "metaFiles": [".env", ".adonisrc.json"],
+  "preloads": ["./start/routes", "./start/kernel"],
+  "providers": ["./providers/AppProvider", "@adonisjs/core", "@adonisjs/lucid"],
+  "typescript": true
+}
