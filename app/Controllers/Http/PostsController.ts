@@ -1,12 +1,12 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import PostsService from '@ioc:PostsService'
+import Post from 'App/Models/Post'
 import PostValidator from 'App/Validators/PostValidator'
 
 export default class PostsController {
   public async store ({ request, response }: HttpContextContract) {
     try {
-      const postData = await request.validate(PostValidator)
-      const post = await PostsService.create(postData)
+      const { title, content } = await request.validate(PostValidator)
+      const post = await Post.create({ title, content })
       return response.status(201).send({ post })
     } catch (error) {
       return response.status(422).send(error.messages)
@@ -15,7 +15,7 @@ export default class PostsController {
 
   public async index ({ response }: HttpContextContract) {
     try {
-      const posts = await PostsService.getAll()
+      const posts = await Post.all()
       return response.ok({ posts })
     } catch (error) {
       return response.status(500)
@@ -24,7 +24,7 @@ export default class PostsController {
 
   public async show ({ params, response }: HttpContextContract) {
     try {
-      const post = await PostsService.getOne({ id: params.id })
+      const post = await Post.findOrFail(params.id)
       return response.ok({ post })
     } catch (error) {
       return response.status(404)
@@ -34,7 +34,19 @@ export default class PostsController {
   public async update ({ params, request, response }: HttpContextContract) {
     try {
       const { content, title } = request.only(['title', 'content'])
-      const post = await PostsService.update({ id: params.id, title, content })
+
+      const post = await Post.findOrFail(params.id)
+
+      if (title) {
+        post.title = title
+      }
+
+      if (content) {
+        post.content = content
+      }
+
+      await post.save()
+
       return response.ok({ post })
     } catch (error) {
       return response.status(500)
@@ -43,7 +55,8 @@ export default class PostsController {
 
   public async destroy ({ params, response }: HttpContextContract) {
     try {
-      await PostsService.delete({ id: params.id })
+      const post = await Post.find(params.id)
+      await post?.delete()
       return response.status(204)
     } catch (error) {
       return response.status(500)
