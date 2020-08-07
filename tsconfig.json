@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noImplicitAny": true,
     "outDir": "build",
     "paths": {
       "App/*": ["./app/*"],
@@ -8,6 +9,8 @@
     },
     "rootDir": "./",
     "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
     "types": ["@adonisjs/core", "@adonisjs/lucid"]
   },
   "exclude": ["node_modules", "build"],
