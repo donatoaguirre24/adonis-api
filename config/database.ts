@@ -1,7 +1,7 @@
-import Env from '@ioc:Adonis/Core/Env'
-import { OrmConfig } from '@ioc:Adonis/Lucid/Orm'
 import Application from '@ioc:Adonis/Core/Application'
+import Env from '@ioc:Adonis/Core/Env'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
+import { OrmConfig } from '@ioc:Adonis/Lucid/Orm'
 
 const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
   /*
@@ -80,6 +80,7 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
         password: Env.get('DB_PASSWORD', 'lucid') as string,
         database: Env.get('DB_NAME', 'lucid') as string,
       },
+      debug: true,
       healthCheck: true,
     },
   },
