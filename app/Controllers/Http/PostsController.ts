@@ -20,26 +20,15 @@ export default class PostsController {
   }
 
   public async update ({ params, request, response }: HttpContextContract) {
-    const { content, title } = request.only(['title', 'content'])
-
     const post = await Post.findOrFail(params.id)
-
-    if (title) {
-      post.title = title
-    }
-
-    if (content) {
-      post.content = content
-    }
-
+    post.merge(request.only(['title', 'content']))
     await post.save()
-
     return response.ok({ post })
   }
 
   public async destroy ({ params, response }: HttpContextContract) {
     const post = await Post.find(params.id)
     await post?.delete()
-    return response.status(204)
+    return response.noContent()
   }
 }
