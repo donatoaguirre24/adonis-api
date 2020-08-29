@@ -1,16 +1,9 @@
-/**
- * Config source: https://git.io/JfefZ
- *
- * Feel free to let us know via PR, if you find something broken in this config
- * file.
- */
-
-import proxyAddr from 'proxy-addr'
 import Env from '@ioc:Adonis/Core/Env'
 import { LoggerConfig } from '@ioc:Adonis/Core/Logger'
+import { ProfilerConfig } from '@ioc:Adonis/Core/Profiler'
 import { RequestConfig } from '@ioc:Adonis/Core/Request'
 import { ResponseConfig } from '@ioc:Adonis/Core/Response'
-import { ProfilerConfig } from '@ioc:Adonis/Core/Profiler'
+import proxyAddr from 'proxy-addr'
 
 type HttpConfig = RequestConfig & ResponseConfig
 
