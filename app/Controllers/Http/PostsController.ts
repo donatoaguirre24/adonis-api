@@ -9,9 +9,11 @@ export default class PostsController {
     return response.status(201).send({ post })
   }
 
-  public async index ({ response }: HttpContextContract) {
-    const posts = await Post.all()
-    return response.ok({ posts })
+  public async index ({ request, response }: HttpContextContract) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 20)
+    const posts = await Post.query().paginate(page, limit)
+    return response.ok(posts)
   }
 
   public async show ({ params, response }: HttpContextContract) {
